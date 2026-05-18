@@ -27,7 +27,10 @@
       <li><a href="../opengl/">OpenGL</a></li>
       <li><a href="../projects/">项目</a></li>
     </ul>
+    <button class="theme-toggle" aria-label="切换主题" title="切换亮色/暗色主题">◐</button>
   </nav>
+  <aside class="toc-sidebar"><div class="toc-sidebar-title">本章目录</div></aside>
+
   <main class="container" id="main">
     <section class="hero">
       <div class="eyebrow">文章</div>
@@ -73,6 +76,11 @@ Task example() {
       <p>对于工业级项目，建议结合已有框架（如 cppcoro、asio 或 libuv）来管理协程生命周期。</p>
     </section>
   </main>
+  <nav class="chapter-nav">
+    <div class="chapter-nav__prev"><span class="chapter-nav__label">上一章</span></div>
+    <div class="chapter-nav__next"><span class="chapter-nav__label">下一章</span><a href="resource-management.html">智能指针与资源管理</a></div>
+  </nav>
+
   <footer class="container">
     <span>© 2026 技术博客 · C++20 协程</span>
     <div class="footer-links"><a href="./">返回 C++ 模块</a><a href="../">返回主页</a></div>
