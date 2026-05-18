@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Qt QWidget · 技术博客</title>
+  <meta name="description" content="介绍 QWidget 系统、布局管理、事件处理、自绘控件和跨平台部署策略。" />
+  <meta property="og:title" content="Qt QWidget · 技术博客" />
+  <meta property="og:description" content="介绍 QWidget 系统、布局管理、事件处理、自绘控件和跨平台部署策略。" />
+  <meta property="og:type" content="article" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../../css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳转到主要内容</a>
+  <nav class="site-nav">
+    <div class="nav-brand"><a href="../../">技术博客</a></div>
+    <button class="nav-toggle" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu">
+      <li><a href="../../cpp/">C++</a></li>
+      <li><a href="../../qt/">Qt</a></li>
+      <li><a href="../../opencv/">OpenCV</a></li>
+      <li><a href="../../opengl/">OpenGL</a></li>
+      <li><a href="../../projects/">项目</a></li>
+    </ul>
+  </nav>
+
+  <main class="container" id="main">
+    <section class="hero">
+      <div class="eyebrow">Qt QWidget</div>
+      <h1>传统桌面应用与自定义控件</h1>
+      <p class="lead">介绍 QWidget 系统、布局管理、事件处理、自绘控件和跨平台部署策略。</p>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-number">01</span>
+        <h2>核心主题</h2>
+      </div>
+      <div class="cards">
+        <article class="topic-card">
+          <h3>控件与布局</h3>
+          <p>学习 QWidget、QLayout、QSplitter 和弹性布局的组合方式。</p>
+        </article>
+        <article class="topic-card">
+          <h3>事件与信号槽</h3>
+          <p>掌握鼠标事件、键盘事件和自定义信号槽的最佳实践。</p>
+        </article>
+        <article class="topic-card">
+          <h3>自定义绘图</h3>
+          <p>使用 QPainter 构建可交互控件和高性能图形视图。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-number">02</span>
+        <h2>实践案例</h2>
+      </div>
+      <ul class="article-list">
+        <li>
+          <a href="custom-widget.html"><strong>1. 自定义仪表盘控件</strong></a>
+          <div class="article-meta">使用 QPainter 绘制仪表盘、指针和刻度，并实现动态刷新。</div>
+        </li>
+        <li>
+          <a href="deployment.html"><strong>2. 跨平台发布指南</strong></a>
+          <div class="article-meta">Qt 项目在 Windows、Linux 与 macOS 上的部署差异与打包策略。</div>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="container">
+    <span>© 2026 技术博客 · Qt QWidget</span>
+    <div class="footer-links"><a href="../">返回 Qt 模块</a><a href="../../">返回主页</a></div>
+  </footer>
+  <button class="back-to-top" aria-label="返回顶部">&#8593;</button>
+  <script src="../../js/main.js" defer></script>
+</body>
+</html>

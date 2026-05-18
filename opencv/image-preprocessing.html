@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenCV 图像预处理 · 技术博客</title>
+  <meta name="description" content="介绍常见图像预处理步骤，包括平滑、阈值分割与边缘检测。" />
+  <meta property="og:title" content="OpenCV 图像预处理 · 技术博客" />
+  <meta property="og:description" content="介绍常见图像预处理步骤，包括平滑、阈值分割与边缘检测。" />
+  <meta property="og:type" content="article" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳转到主要内容</a>
+  <nav class="site-nav">
+    <div class="nav-brand"><a href="../">技术博客</a></div>
+    <button class="nav-toggle" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu">
+      <li><a href="../cpp/">C++</a></li>
+      <li><a href="../qt/">Qt</a></li>
+      <li><a href="../opencv/">OpenCV</a></li>
+      <li><a href="../opengl/">OpenGL</a></li>
+      <li><a href="../projects/">项目</a></li>
+    </ul>
+  </nav>
+  <main class="container" id="main">
+    <section class="hero">
+      <div class="eyebrow">文章</div>
+      <h1>OpenCV 图像预处理</h1>
+      <p class="lead">介绍常见图像预处理步骤，包括平滑、阈值分割与边缘检测。</p>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">01</span><h2>噪声去除</h2></div>
+      <article class="details">
+        <p>常用滤波方法包括 GaussianBlur、medianBlur 和 bilateralFilter。GaussianBlur 适用于高斯噪声，medianBlur 对椒盐噪声效果更好，而 bilateralFilter 在保边缘的同时平滑图像。</p>
+        <pre><code>cv::Mat blurred;
+cv::GaussianBlur(src, blurred, cv::Size(5, 5), 1.5);
+</code></pre>
+      </article>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">02</span><h2>颜色空间与阈值</h2></div>
+      <article class="details">
+        <p>在 HSV 或 Lab 空间中执行阈值分割通常更稳健。先转换颜色空间，再应用固定阈值或自适应阈值。</p>
+        <pre><code>cv::Mat hsv, mask;
+cv::cvtColor(src, hsv, cv::COLOR_BGR2HSV);
+cv::inRange(hsv, cv::Scalar(35, 50, 50), cv::Scalar(85, 255, 255), mask);
+</code></pre>
+      </article>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">03</span><h2>形态学操作</h2></div>
+      <article class="details">
+        <p>腐蚀和膨胀可用于清理噪点、填补小孔。开运算与闭运算组合适合去掉小斑点或连接断裂区域。</p>
+        <pre><code>cv::Mat kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(3,3));
+cv::morphologyEx(mask, mask, cv::MORPH_CLOSE, kernel);
+</code></pre>
+      </article>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">04</span><h2>边缘检测</h2></div>
+      <article class="details">
+        <p>Canny 算法是最常见的边缘检测方法，适合形状检测与轮廓提取。使用高斯平滑减少噪声，并调整低/高阈值以匹配图像对比度。</p>
+        <pre><code>cv::Mat edges;
+cv::Canny(gray, edges, 50, 150);
+</code></pre>
+      </article>
+    </section>
+  </main>
+  <footer class="container">
+    <span>© 2026 技术博客 · OpenCV 预处理</span>
+    <div class="footer-links"><a href="../">返回 OpenCV 模块</a><a href="../../">返回主页</a></div>
+  </footer>
+  <button class="back-to-top" aria-label="返回顶部">&#8593;</button>
+  <script src="../js/main.js" defer></script>
+</body>
+</html>

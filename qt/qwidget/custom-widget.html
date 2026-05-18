@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>自定义仪表盘控件 · 技术博客</title>
+  <meta name="description" content="通过 QPainter 绘制指针、刻度和渐变背景，实现可交互的控件组件。" />
+  <meta property="og:title" content="自定义仪表盘控件 · 技术博客" />
+  <meta property="og:description" content="通过 QPainter 绘制指针、刻度和渐变背景，实现可交互的控件组件。" />
+  <meta property="og:type" content="article" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../../css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳转到主要内容</a>
+  <nav class="site-nav">
+    <div class="nav-brand"><a href="../../">技术博客</a></div>
+    <button class="nav-toggle" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu">
+      <li><a href="../../cpp/">C++</a></li>
+      <li><a href="../../qt/">Qt</a></li>
+      <li><a href="../../opencv/">OpenCV</a></li>
+      <li><a href="../../opengl/">OpenGL</a></li>
+      <li><a href="../../projects/">项目</a></li>
+    </ul>
+  </nav>
+  <main class="container" id="main">
+    <section class="hero">
+      <div class="eyebrow">文章</div>
+      <h1>自定义仪表盘控件</h1>
+      <p class="lead">通过 QPainter 绘制指针、刻度和渐变背景，实现可交互的控件组件。</p>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><span class="section-number">01</span><h2>绘制流程</h2></div>
+      <article class="details">
+        <p>在 <code>paintEvent</code> 中完成绘制，先平移坐标原点到控件中心，再缩放到比例空间。这样可以用统一坐标绘制仪表盘、刻度、指针和渐变背景。</p>
+        <pre><code>void GaugeWidget::paintEvent(QPaintEvent *) {
+  QPainter painter(this);
+  painter.setRenderHint(QPainter::Antialiasing);
+  painter.translate(width() / 2, height() / 2);
+  painter.scale(radius / 100.0, radius / 100.0);
+  // 绘制刻度、指针等
+}
+</code></pre>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><span class="section-number">02</span><h2>事件与交互</h2></div>
+      <article class="details">
+        <p>通过重写鼠标事件响应用户输入，计算角度并更新当前值。配合 QPropertyAnimation 可以让指针移动过程更加平滑。</p>
+        <pre><code>void GaugeWidget::mousePressEvent(QMouseEvent *event) {
+  // 计算新的值并更新
+  update();
+}
+</code></pre>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><span class="section-number">03</span><h2>尺寸与性能</h2></div>
+      <article class="details">
+        <p>实现 <code>sizeHint</code> 使布局器更好地安排控件大小。对复杂图形使用缓存 pixmap，避免每次重绘都重复计算。</p>
+        <pre><code>QSize GaugeWidget::sizeHint() const {
+  return QSize(220, 220);
+}
+</code></pre>
+      </article>
+    </section>
+  </main>
+
+  <footer class="container">
+    <span>© 2026 技术博客 · QWidget 自定义控件</span>
+    <div class="footer-links"><a href="../">返回 Qt 模块</a><a href="../../">返回主页</a></div>
+  </footer>
+  <button class="back-to-top" aria-label="返回顶部">&#8593;</button>
+  <script src="../../js/main.js" defer></script>
+</body>
+</html>

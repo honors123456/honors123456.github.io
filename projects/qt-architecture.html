@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Qt 项目架构分析 · 技术博客</title>
+  <meta name="description" content="分享 Qt 项目常见目录结构、模块分层和可维护的架构设计。" />
+  <meta property="og:title" content="Qt 项目架构分析 · 技术博客" />
+  <meta property="og:description" content="分享 Qt 项目常见目录结构、模块分层和可维护的架构设计。" />
+  <meta property="og:type" content="article" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳转到主要内容</a>
+  <nav class="site-nav">
+    <div class="nav-brand"><a href="../">技术博客</a></div>
+    <button class="nav-toggle" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu">
+      <li><a href="../cpp/">C++</a></li>
+      <li><a href="../qt/">Qt</a></li>
+      <li><a href="../opencv/">OpenCV</a></li>
+      <li><a href="../opengl/">OpenGL</a></li>
+      <li><a href="../projects/">项目</a></li>
+    </ul>
+  </nav>
+  <main class="container" id="main">
+    <section class="hero">
+      <div class="eyebrow">文章</div>
+      <h1>Qt 项目架构分析</h1>
+      <p class="lead">分享 Qt 项目常见目录结构、模块分层和可维护的架构设计。</p>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">01</span><h2>分层结构</h2></div>
+      <article class="details">
+        <p>建议将项目分为 UI 层、业务层、数据层和资源层，保持职责清晰。UI 层只负责展示，业务层处理核心逻辑，数据层处理输入输出与存储。</p>
+      </article>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">02</span><h2>界面与逻辑分离</h2></div>
+      <article class="details">
+        <p>使用 QML 或 QWidget 负责展示，用 C++ 负责状态管理与业务逻辑。将信号槽绑定和视图数据分离，方便后续维护与测试。</p>
+        <pre><code>class AppController : public QObject {
+  Q_OBJECT
+public:
+  Q_INVOKABLE void loadData();
+signals:
+  void dataReady(const QVariantList &items);
+};
+</code></pre>
+      </article>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">03</span><h2>模块化复用</h2></div>
+      <article class="details">
+        <p>把通用组件、服务和工具类提取到独立模块，便于复用与测试。使用 CMake 子目录或库项目组织代码，并明确模块间依赖。</p>
+        <pre><code>add_subdirectory(core)
+add_subdirectory(gui)
+add_executable(app main.cpp)
+target_link_libraries(app PRIVATE core gui)
+</code></pre>
+      </article>
+    </section>
+  </main>
+  <footer class="container">
+    <span>© 2026 技术博客 · Qt 架构</span>
+    <div class="footer-links"><a href="../">返回项目模块</a><a href="../../">返回主页</a></div>
+  </footer>
+  <button class="back-to-top" aria-label="返回顶部">&#8593;</button>
+  <script src="../js/main.js" defer></script>
+</body>
+</html>

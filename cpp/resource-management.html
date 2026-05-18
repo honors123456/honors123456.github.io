@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>智能指针与资源管理 · 技术博客</title>
+  <meta name="description" content="深入分析 unique_ptr、shared_ptr、weak_ptr 与资源管理模式，避免内存泄漏与悬挂引用。" />
+  <meta property="og:title" content="智能指针与资源管理 · 技术博客" />
+  <meta property="og:description" content="深入分析 unique_ptr、shared_ptr、weak_ptr 与资源管理模式，避免内存泄漏与悬挂引用。" />
+  <meta property="og:type" content="article" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳转到主要内容</a>
+  <nav class="site-nav">
+    <div class="nav-brand"><a href="../">技术博客</a></div>
+    <button class="nav-toggle" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu">
+      <li><a href="../cpp/">C++</a></li>
+      <li><a href="../qt/">Qt</a></li>
+      <li><a href="../opencv/">OpenCV</a></li>
+      <li><a href="../opengl/">OpenGL</a></li>
+      <li><a href="../projects/">项目</a></li>
+    </ul>
+  </nav>
+  <main class="container" id="main">
+    <section class="hero">
+      <div class="eyebrow">文章</div>
+      <h1>智能指针与资源管理</h1>
+      <p class="lead">深入分析 unique_ptr、shared_ptr、weak_ptr 与资源管理模式，避免内存泄漏与悬挂引用。</p>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">01</span><h2>unique_ptr</h2></div>
+      <p>唯一所有权，适合管理单个动态对象或数组。</p>
+      <pre><code>std::unique_ptr<MyClass> ptr = std::make_unique<MyClass>(args);
+ptr->doSomething();
+</code></pre>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">02</span><h2>shared_ptr</h2></div>
+      <p>引用计数共享所有权，适合多个模块共同使用同一资源。</p>
+      <pre><code>auto shared = std::make_shared<MyClass>(args);
+auto copy = shared; // 引用计数 +1
+</code></pre>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">03</span><h2>weak_ptr</h2></div>
+      <p>避免循环引用，可用于缓存、观察者模式与临时访问。</p>
+      <pre><code>std::weak_ptr<MyClass> observe = shared;
+if (auto alive = observe.lock()) {
+  alive->doSomething();
+}
+</code></pre>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">04</span><h2>实践建议</h2></div>
+      <p>优先使用 unique_ptr，只有真正需要共享所有权时才使用 shared_ptr；weak_ptr 用于打破循环引用。</p>
+    </section>
+  </main>
+  <footer class="container">
+    <span>© 2026 技术博客 · 资源管理</span>
+    <div class="footer-links"><a href="./">返回 C++ 模块</a><a href="../">返回主页</a></div>
+  </footer>
+  <button class="back-to-top" aria-label="返回顶部">&#8593;</button>
+  <script src="../js/main.js" defer></script>
+</body>
+</html>

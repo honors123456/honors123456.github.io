@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>项目 · 技术博客</title>
+  <meta name="description" content="技术实战项目展示，涵盖跨平台桌面工具、视觉检测与渲染引擎的架构分析。" />
+  <meta property="og:title" content="项目 · 技术博客" />
+  <meta property="og:description" content="技术实战项目展示，涵盖跨平台桌面工具、视觉检测与渲染引擎的架构分析。" />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳转到主要内容</a>
+  <nav class="site-nav">
+    <div class="nav-brand"><a href="../">技术博客</a></div>
+    <button class="nav-toggle" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu">
+      <li><a href="../cpp/">C++</a></li>
+      <li><a href="../qt/">Qt</a></li>
+      <li><a href="../opencv/">OpenCV</a></li>
+      <li><a href="../opengl/">OpenGL</a></li>
+      <li><a href="../projects/">项目</a></li>
+    </ul>
+  </nav>
+
+  <main class="container" id="main">
+    <section class="hero">
+      <div class="eyebrow">项目模块</div>
+      <h1>技术实战项目展示</h1>
+      <p class="lead">呈现来自 C++、Qt、OpenCV 和 OpenGL 的工程实践，包含源码说明、架构分析与落实要点。</p>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-number">01</span>
+        <h2>精选项目</h2>
+      </div>
+      <div class="cards">
+        <article class="module-card">
+          <h3><a href="qt-architecture.html">跨平台桌面工具</a></h3>
+          <p>基于 Qt 构建的管理工具，支持 Windows 与 Linux 的统一 UI 体验。</p>
+        </article>
+        <article class="module-card">
+          <h3><a href="opencv-performance.html">视觉检测原型</a></h3>
+          <p>OpenCV 图像处理与检测模块，结合 Qt 界面进行实时结果展示。</p>
+        </article>
+        <article class="module-card">
+          <h3><a href="cross-module-reuse.html">OpenGL 渲染引擎</a></h3>
+          <p>实现简单场景管理、着色器加载与交互摄像机控制。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-number">02</span>
+        <h2>项目总结</h2>
+      </div>
+      <ul class="article-list">
+        <li>
+          <a href="qt-architecture.html"><strong>1. Qt 项目架构分析</strong></a>
+          <div class="article-meta">介绍项目目录、模块分层以及信号槽组织方式。</div>
+        </li>
+        <li>
+          <a href="opencv-performance.html"><strong>2. OpenCV 性能调优</strong></a>
+          <div class="article-meta">讲解如何减少图像复制、优化循环并行处理。</div>
+        </li>
+        <li>
+          <a href="cross-module-reuse.html"><strong>3. 跨模块复用策略</strong></a>
+          <div class="article-meta">分享 C++ 库与 UI 模块之间接口设计和复用方案。</div>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="container">
+    <span>© 2026 技术博客 · 项目</span>
+    <div class="footer-links"><a href="../">返回主页</a></div>
+  </footer>
+  <button class="back-to-top" aria-label="返回顶部">&#8593;</button>
+  <script src="../js/main.js" defer></script>
+</body>
+</html>

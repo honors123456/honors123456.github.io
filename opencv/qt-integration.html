@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Qt + OpenCV 混合展示 · 技术博客</title>
+  <meta name="description" content="讲解如何在 Qt 界面中展示 OpenCV 处理后的图像与视频帧。" />
+  <meta property="og:title" content="Qt + OpenCV 混合展示 · 技术博客" />
+  <meta property="og:description" content="讲解如何在 Qt 界面中展示 OpenCV 处理后的图像与视频帧。" />
+  <meta property="og:type" content="article" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳转到主要内容</a>
+  <nav class="site-nav">
+    <div class="nav-brand"><a href="../">技术博客</a></div>
+    <button class="nav-toggle" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu">
+      <li><a href="../cpp/">C++</a></li>
+      <li><a href="../qt/">Qt</a></li>
+      <li><a href="../opencv/">OpenCV</a></li>
+      <li><a href="../opengl/">OpenGL</a></li>
+      <li><a href="../projects/">项目</a></li>
+    </ul>
+  </nav>
+  <main class="container" id="main">
+    <section class="hero">
+      <div class="eyebrow">文章</div>
+      <h1>Qt + OpenCV 混合展示</h1>
+      <p class="lead">讲解如何在 Qt 界面中展示 OpenCV 处理后的图像与视频帧。</p>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">01</span><h2>Mat 到 QImage</h2></div>
+      <article class="details">
+        <p>OpenCV 图像默认为 BGR 排序，需要转换为 RGB 后再构建 QImage。注意不要直接释放原始数据，除非使用深拷贝。</p>
+        <pre><code>QImage matToQImage(const cv::Mat &mat) {
+  if (mat.type() == CV_8UC3) {
+    cv::Mat rgb;
+    cv::cvtColor(mat, rgb, cv::COLOR_BGR2RGB);
+    return QImage(rgb.data, rgb.cols, rgb.rows, rgb.step, QImage::Format_RGB888).copy();
+  }
+  return QImage();
+}
+</code></pre>
+      </article>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">02</span><h2>显示到 QLabel</h2></div>
+      <article class="details">
+        <p>使用 QLabel 或 QGraphicsScene 显示转换后的 QImage，确保在 GUI 线程中更新界面。</p>
+        <pre><code>ui->videoLabel->setPixmap(QPixmap::fromImage(frameImage));
+</code></pre>
+      </article>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">03</span><h2>实时刷新</h2></div>
+      <article class="details">
+        <p>使用 QTimer 或后台线程循环读取摄像头帧。在主线程中通过信号槽将图像传递给 UI，以避免线程不安全访问。</p>
+      </article>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">04</span><h2>性能优化</h2></div>
+      <article class="details">
+        <p>减少帧转换次数，按需更新显示。对于高分辨率视频，可考虑在后台线程中先缩放再渲染。</p>
+      </article>
+    </section>
+  </main>
+  <footer class="container">
+    <span>© 2026 技术博客 · Qt + OpenCV</span>
+    <div class="footer-links"><a href="../">返回 OpenCV 模块</a><a href="../../">返回主页</a></div>
+  </footer>
+  <button class="back-to-top" aria-label="返回顶部">&#8593;</button>
+  <script src="../js/main.js" defer></script>
+</body>
+</html>

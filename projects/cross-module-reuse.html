@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>跨模块复用策略 · 技术博客</title>
+  <meta name="description" content="总结 C++ 核心库与 UI 模块之间的接口设计与复用实践。" />
+  <meta property="og:title" content="跨模块复用策略 · 技术博客" />
+  <meta property="og:description" content="总结 C++ 核心库与 UI 模块之间的接口设计与复用实践。" />
+  <meta property="og:type" content="article" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳转到主要内容</a>
+  <nav class="site-nav">
+    <div class="nav-brand"><a href="../">技术博客</a></div>
+    <button class="nav-toggle" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu">
+      <li><a href="../cpp/">C++</a></li>
+      <li><a href="../qt/">Qt</a></li>
+      <li><a href="../opencv/">OpenCV</a></li>
+      <li><a href="../opengl/">OpenGL</a></li>
+      <li><a href="../projects/">项目</a></li>
+    </ul>
+  </nav>
+  <main class="container" id="main">
+    <section class="hero">
+      <div class="eyebrow">文章</div>
+      <h1>跨模块复用策略</h1>
+      <p class="lead">总结 C++ 核心库与 UI 模块之间的接口设计与复用实践。</p>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">01</span><h2>接口驱动设计</h2></div>
+      <article class="details">
+        <p>将核心算法和数据结构暴露为干净接口，避免 UI 层直接依赖实现细节。良好的接口定义可以降低模块间耦合，并使单元测试变得可行。</p>
+      </article>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">02</span><h2>模块边界</h2></div>
+      <article class="details">
+        <p>区分引擎模块、展示模块与工具模块，提高替换与扩展能力。比如把图像处理、渲染和配置管理分别作为独立库维护。</p>
+      </article>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">03</span><h2>共享库</h2></div>
+      <article class="details">
+        <p>把通用工具、数据结构和算法提取成静态或动态库，多个项目可直接复用。通过 CMake 管理依赖关系，让上层应用仅链接所需模块。</p>
+        <pre><code>add_library(core STATIC src/core.cpp)
+add_library(ui STATIC src/ui.cpp)
+target_link_libraries(ui PRIVATE core)
+</code></pre>
+      </article>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">04</span><h2>数据契约</h2></div>
+      <article class="details">
+        <p>为模块间传递的数据定义明确结构，如 JSON、protobuf 或自定义 DTO。保持跨模块数据契约稳定，避免频繁修改接口。</p>
+      </article>
+    </section>
+  </main>
+  <footer class="container">
+    <span>© 2026 技术博客 · 模块复用</span>
+    <div class="footer-links"><a href="../">返回项目模块</a><a href="../../">返回主页</a></div>
+  </footer>
+  <button class="back-to-top" aria-label="返回顶部">&#8593;</button>
+  <script src="../js/main.js" defer></script>
+</body>
+</html>

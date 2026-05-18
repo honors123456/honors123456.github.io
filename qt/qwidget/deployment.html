@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Qt 部署指南 · 技术博客</title>
+  <meta name="description" content="覆盖 Windows、Linux 与 macOS 的常见部署流程，以及如何处理 Qt 运行时依赖与插件加载。" />
+  <meta property="og:title" content="Qt 部署指南 · 技术博客" />
+  <meta property="og:description" content="覆盖 Windows、Linux 与 macOS 的常见部署流程，以及如何处理 Qt 运行时依赖与插件加载。" />
+  <meta property="og:type" content="article" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../../css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳转到主要内容</a>
+  <nav class="site-nav">
+    <div class="nav-brand"><a href="../../">技术博客</a></div>
+    <button class="nav-toggle" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu">
+      <li><a href="../../cpp/">C++</a></li>
+      <li><a href="../../qt/">Qt</a></li>
+      <li><a href="../../opencv/">OpenCV</a></li>
+      <li><a href="../../opengl/">OpenGL</a></li>
+      <li><a href="../../projects/">项目</a></li>
+    </ul>
+  </nav>
+
+  <main class="container" id="main">
+    <section class="hero">
+      <div class="eyebrow">Qt QWidget</div>
+      <h1>Qt 应用跨平台发布与打包</h1>
+      <p class="lead">覆盖 Windows、Linux 与 macOS 的常见部署流程，以及如何处理 Qt 运行时依赖与插件加载。</p>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-number">01</span>
+        <h2>Windows 打包</h2>
+      </div>
+      <article class="details">
+        <p>使用 <code>windeployqt</code> 可以自动收集应用所需的 Qt 运行时库与插件。通常在 release 构建目录执行该工具，然后将整个目录打包发布。</p>
+        <pre><code>windeployqt path\to\your\app.exe --release --qmldir path\to\qml</code></pre>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-number">02</span>
+        <h2>Linux 打包与依赖</h2>
+      </div>
+      <article class="details">
+        <p>在 Linux 上，常见做法是构建静态链接库或使用 AppImage。确认 Qt 插件目录以及图形后端（如 XCB、EGL）已随应用一起打包。</p>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-number">03</span>
+        <h2>macOS 发布</h2>
+      </div>
+      <article class="details">
+        <p>使用 <code>macdeployqt</code> 将 Qt 框架打包到应用程序包内，并检查签名与沙箱规则。macOS 上应避免硬编码路径，使用相对路径加载资源。</p>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-number">04</span>
+        <h2>常见调试技巧</h2>
+      </div>
+      <article class="details">
+        <p>如果应用启动失败，可使用环境变量 <code>QT_DEBUG_PLUGINS=1</code> 查看插件加载信息；遇到布局异常，则检查资源路径与 Qt 版本是否一致。</p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="container">
+    <span>© 2026 技术博客 · Qt 部署指南</span>
+    <div class="footer-links"><a href="index.html">返回 QWidget 模块</a><a href="../../">返回主页</a></div>
+  </footer>
+  <button class="back-to-top" aria-label="返回顶部">&#8593;</button>
+  <script src="../../js/main.js" defer></script>
+</body>
+</html>

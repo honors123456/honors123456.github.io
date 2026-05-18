@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenGL 模块 · 技术博客</title>
+  <meta name="description" content="图形渲染与 3D 引擎基础，从渲染管线、着色器到纹理光照与场景构建。" />
+  <meta property="og:title" content="OpenGL 模块 · 技术博客" />
+  <meta property="og:description" content="图形渲染与 3D 引擎基础，从渲染管线、着色器到纹理光照与场景构建。" />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳转到主要内容</a>
+  <nav class="site-nav">
+    <div class="nav-brand"><a href="../">技术博客</a></div>
+    <button class="nav-toggle" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu">
+      <li><a href="../cpp/">C++</a></li>
+      <li><a href="../qt/">Qt</a></li>
+      <li><a href="../opencv/">OpenCV</a></li>
+      <li><a href="../opengl/">OpenGL</a></li>
+      <li><a href="../projects/">项目</a></li>
+    </ul>
+  </nav>
+
+  <main class="container" id="main">
+    <section class="hero">
+      <div class="eyebrow">OpenGL</div>
+      <h1>图形渲染与 3D 引擎基础</h1>
+      <p class="lead">讲解 OpenGL 渲染管线、着色器编写、缓冲对象、纹理与光照，以及与 Qt/GLFW 的集成。</p>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-number">01</span>
+        <h2>核心专题</h2>
+      </div>
+      <div class="cards">
+        <article class="module-card">
+          <h3>渲染管线基础</h3>
+          <p>从顶点到片元，理解可编程流水线与状态机式 API。</p>
+        </article>
+        <article class="module-card">
+          <h3>着色器与 GLSL</h3>
+          <p>编写顶点着色器、片元着色器，并实现纹理与光照。</p>
+        </article>
+        <article class="module-card">
+          <h3>3D 场景构建</h3>
+          <p>摄像机、模型矩阵、光源与帧缓冲，构建交互式渲染场景。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-number">02</span>
+        <h2>推荐文章</h2>
+      </div>
+      <ul class="article-list">
+        <li>
+          <a href="intro-rendering.html"><strong>1. OpenGL 入门渲染</strong></a>
+          <div class="article-meta">使用现代 OpenGL 初始化窗口并绘制第一个三角形。</div>
+        </li>
+        <li>
+          <a href="texturing-lighting.html"><strong>2. 纹理与光照示例</strong></a>
+          <div class="article-meta">实现漫反射、镜面反射与法线贴图的基础。</div>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="container">
+    <span>© 2026 技术博客 · OpenGL</span>
+    <div class="footer-links"><a href="../">返回主页</a></div>
+  </footer>
+  <button class="back-to-top" aria-label="返回顶部">&#8593;</button>
+  <script src="../js/main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QML 自定义控件 · 技术博客</title>
+  <meta name="description" content="从设计可复用组件到在不同视图间复用属性与行为，掌握 QML 组件化开发的实战要点。" />
+  <meta property="og:title" content="QML 自定义控件 · 技术博客" />
+  <meta property="og:description" content="从设计可复用组件到在不同视图间复用属性与行为，掌握 QML 组件化开发的实战要点。" />
+  <meta property="og:type" content="article" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../../css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳转到主要内容</a>
+  <nav class="site-nav">
+    <div class="nav-brand"><a href="../../">技术博客</a></div>
+    <button class="nav-toggle" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu">
+      <li><a href="../../cpp/">C++</a></li>
+      <li><a href="../../qt/">Qt</a></li>
+      <li><a href="../../opencv/">OpenCV</a></li>
+      <li><a href="../../opengl/">OpenGL</a></li>
+      <li><a href="../../projects/">项目</a></li>
+    </ul>
+  </nav>
+
+  <main class="container" id="main">
+    <section class="hero">
+      <div class="eyebrow">Qt QML</div>
+      <h1>QML 自定义组件与复用</h1>
+      <p class="lead">从设计可复用组件到在不同视图间复用属性与行为，掌握 QML 组件化开发的实战要点。</p>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-number">01</span>
+        <h2>为什么要自定义组件</h2>
+      </div>
+      <article class="details">
+        <p>通过将界面逻辑封装为可组合的组件，能够实现更简洁的布局与更易于维护的项目结构。QML 的组件系统让你可以在多个视图间复用布尔属性、动画状态和交互行为。</p>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-number">02</span>
+        <h2>组件定义与复用</h2>
+      </div>
+      <article class="details">
+        <p>将组件放在单独的 QML 文件中，例如 <code>CustomButton.qml</code> 或 <code>StatusCard.qml</code>，然后在需要的页面中直接引用。这样可以利用属性绑定与信号来实现不同页面间的数据传递。</p>
+        <pre><code>import QtQuick 2.15
+import QtQuick.Controls 2.15
+
+Rectangle {
+  id: card
+  width: 320
+  height: 140
+  color: "#ffffff"
+  radius: 18
+  border.color: "#ddd"
+
+  property alias title: titleText.text
+  signal clicked()
+
+  Column {
+    anchors.centerIn: parent
+    spacing: 10
+
+    Text { id: titleText; font.pixelSize: 18; color: "#333" }
+    Button { text: "查看"; onClicked: card.clicked() }
+  }
+}</code></pre>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-number">03</span>
+        <h2>属性与信号设计</h2>
+      </div>
+      <article class="details">
+        <p>使用 <code>property</code> 和 <code>signal</code> 来定义组件接口，让外部页面可以灵活控制视觉和交互行为。例如，为组件提供标题、图标和点击事件回调。</p>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-number">04</span>
+        <h2>与 C++ 后端连接</h2>
+      </div>
+      <article class="details">
+        <p>如果组件需要复杂业务逻辑，可以将 C++ 对象注册为 QML 类型，或使用上下文属性传递对象引用。这样既能保持 UI 的声明式表达，又能利用 C++ 的性能和扩展能力。</p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="container">
+    <span>© 2026 技术博客 · QML 自定义组件</span>
+    <div class="footer-links"><a href="index.html">返回 QML 模块</a><a href="../../">返回主页</a></div>
+  </footer>
+  <button class="back-to-top" aria-label="返回顶部">&#8593;</button>
+  <script src="../../js/main.js" defer></script>
+</body>
+</html>

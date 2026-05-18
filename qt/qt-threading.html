@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Qt 多线程与异步任务 · 技术博客</title>
+  <meta name="description" content="对比 QThread、QRunnable 与 QtConcurrent，帮助你正确选择并发模型并保持 GUI 响应性。" />
+  <meta property="og:title" content="Qt 多线程与异步任务 · 技术博客" />
+  <meta property="og:description" content="对比 QThread、QRunnable 与 QtConcurrent，帮助你正确选择并发模型并保持 GUI 响应性。" />
+  <meta property="og:type" content="article" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳转到主要内容</a>
+  <nav class="site-nav">
+    <div class="nav-brand"><a href="../">技术博客</a></div>
+    <button class="nav-toggle" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu">
+      <li><a href="../cpp/">C++</a></li>
+      <li><a href="../qt/">Qt</a></li>
+      <li><a href="../opencv/">OpenCV</a></li>
+      <li><a href="../opengl/">OpenGL</a></li>
+      <li><a href="../projects/">项目</a></li>
+    </ul>
+  </nav>
+  <main class="container" id="main">
+    <section class="hero">
+      <div class="eyebrow">文章</div>
+      <h1>Qt 多线程与异步任务</h1>
+      <p class="lead">对比 QThread、QRunnable 与 QtConcurrent，帮助你正确选择并发模型并保持 GUI 响应性。</p>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><span class="section-number">01</span><h2>QThread 模型</h2></div>
+      <article class="details">
+        <p>QThread 适用于需要独立事件循环、精细控制线程生命周期或长期后台任务的场景。通过将 QObject 移动到线程，可以在子线程中运行槽函数，并通过信号在主线程中更新 UI。</p>
+        <pre><code>class Worker : public QObject {
+  Q_OBJECT
+public slots:
+  void doWork() {
+    // 运行耗时任务
+  }
+};
+
+QThread* thread = new QThread;
+Worker* worker = new Worker;
+worker->moveToThread(thread);
+connect(thread, &QThread::started, worker, &Worker::doWork);
+connect(worker, &Worker::finished, thread, &QThread::quit);
+connect(thread, &QThread::finished, worker, &QObject::deleteLater);
+thread->start();
+</code></pre>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><span class="section-number">02</span><h2>QRunnable 与线程池</h2></div>
+      <article class="details">
+        <p>QRunnable 更适合短生命周期任务，它与 QThreadPool 结合使用可以减少线程创建开销。提交任务时可设置自动删除模式，让 Qt 线程池负责对象回收。</p>
+        <pre><code>class Task : public QRunnable {
+  void run() override {
+    // 执行任务
+  }
+};
+
+Task* task = new Task;
+task->setAutoDelete(true);
+QThreadPool::globalInstance()->start(task);
+</code></pre>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><span class="section-number">03</span><h2>QtConcurrent 简化并行</h2></div>
+      <article class="details">
+        <p>QtConcurrent 提供高层 API 来执行后台任务、并行 map/reduce 或数据流处理。它适合不需要手动管理线程的场景，并可通过 QFutureWatcher 在完成后通知 UI。</p>
+        <pre><code>auto future = QtConcurrent::run([]() {
+  // 后台工作
+});
+QFutureWatcher<void> watcher;
+connect(&watcher, &QFutureWatcher<void>::finished, []() {
+  // 更新 UI
+});
+watcher.setFuture(future);
+</code></pre>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><span class="section-number">04</span><h2>线程安全与 UI 更新</h2></div>
+      <article class="details">
+        <p>Qt GUI 只能在主线程中访问，任何从后台线程返回的结果都应通过信号槽或 QMetaObject::invokeMethod 传递。避免共享可变数据，必要时使用 QMutex 或 QReadWriteLock 保护临界区。</p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="container">
+    <span>© 2026 技术博客 · Qt 多线程</span>
+    <div class="footer-links"><a href="./">返回 Qt 模块</a><a href="../">返回 Qt 主页</a></div>
+  </footer>
+  <button class="back-to-top" aria-label="返回顶部">&#8593;</button>
+  <script src="../js/main.js" defer></script>
+</body>
+</html>

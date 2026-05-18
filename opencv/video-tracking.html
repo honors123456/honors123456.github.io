@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>视频目标跟踪 · 技术博客</title>
+  <meta name="description" content="比较 KCF、CSRT 与光流等跟踪算法，并介绍实时视频跟踪的关键步骤。" />
+  <meta property="og:title" content="视频目标跟踪 · 技术博客" />
+  <meta property="og:description" content="比较 KCF、CSRT 与光流等跟踪算法，并介绍实时视频跟踪的关键步骤。" />
+  <meta property="og:type" content="article" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳转到主要内容</a>
+  <nav class="site-nav">
+    <div class="nav-brand"><a href="../">技术博客</a></div>
+    <button class="nav-toggle" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu">
+      <li><a href="../cpp/">C++</a></li>
+      <li><a href="../qt/">Qt</a></li>
+      <li><a href="../opencv/">OpenCV</a></li>
+      <li><a href="../opengl/">OpenGL</a></li>
+      <li><a href="../projects/">项目</a></li>
+    </ul>
+  </nav>
+  <main class="container" id="main">
+    <section class="hero">
+      <div class="eyebrow">文章</div>
+      <h1>视频目标跟踪</h1>
+      <p class="lead">比较 KCF、CSRT 与光流等跟踪算法，并介绍实时视频跟踪的关键步骤。</p>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">01</span><h2>跟踪流程</h2></div>
+      <article class="details">
+        <p>视频跟踪通常从目标初始化开始，然后在每帧中提取特征、更新状态、并在画面上绘制边界框。必要时结合检测器纠正漂移。</p>
+      </article>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">02</span><h2>KCF 与 CSRT</h2></div>
+      <article class="details">
+        <p>KCF 适合高速场景，CSRT 精度更高但开销更大。CSRT 能更好处理尺度变化，而 KCF 更适合实时追踪。</p>
+        <pre><code>cv::Ptr<cv::Tracker> tracker = cv::TrackerCSRT::create();
+tracker->init(frame, bbox);
+tracker->update(frame, bbox);
+</code></pre>
+      </article>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">03</span><h2>光流跟踪</h2></div>
+      <article class="details">
+        <p>Lucas-Kanade 光流适合关键点跟踪与小范围运动。先检测关键点，再使用 calcOpticalFlowPyrLK 计算相邻帧的点位移。</p>
+        <pre><code>std::vector<cv::Point2f> prevPts, nextPts;
+cv::calcOpticalFlowPyrLK(prevGray, gray, prevPts, nextPts, status, err);
+</code></pre>
+      </article>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">04</span><h2>性能与稳定性</h2></div>
+      <article class="details">
+        <p>对比跟踪器时，注意帧率与重定位策略。可通过 FPGA、GPU 加速或减少检测频率来提高实时性能。</p>
+      </article>
+    </section>
+  </main>
+  <footer class="container">
+    <span>© 2026 技术博客 · 视频跟踪</span>
+    <div class="footer-links"><a href="../">返回 OpenCV 模块</a><a href="../../">返回主页</a></div>
+  </footer>
+  <button class="back-to-top" aria-label="返回顶部">&#8593;</button>
+  <script src="../js/main.js" defer></script>
+</body>
+</html>

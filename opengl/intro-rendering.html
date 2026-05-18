@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenGL 入门渲染 · 技术博客</title>
+  <meta name="description" content="从创建上下文到绘制三角形，讲解现代 OpenGL 的基础流程。" />
+  <meta property="og:title" content="OpenGL 入门渲染 · 技术博客" />
+  <meta property="og:description" content="从创建上下文到绘制三角形，讲解现代 OpenGL 的基础流程。" />
+  <meta property="og:type" content="article" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳转到主要内容</a>
+  <nav class="site-nav">
+    <div class="nav-brand"><a href="../">技术博客</a></div>
+    <button class="nav-toggle" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu">
+      <li><a href="../cpp/">C++</a></li>
+      <li><a href="../qt/">Qt</a></li>
+      <li><a href="../opencv/">OpenCV</a></li>
+      <li><a href="../opengl/">OpenGL</a></li>
+      <li><a href="../projects/">项目</a></li>
+    </ul>
+  </nav>
+  <main class="container" id="main">
+    <section class="hero">
+      <div class="eyebrow">文章</div>
+      <h1>OpenGL 入门渲染</h1>
+      <p class="lead">从创建上下文到绘制三角形，讲解现代 OpenGL 的基础流程。</p>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">01</span><h2>初始化</h2></div>
+      <article class="details">
+        <p>使用 GLFW、GLUT 或 SDL 创建窗口和 OpenGL 上下文，随后初始化 GLEW/GLAD 或其他加载器。确认启用深度测试与视口设置。</p>
+      </article>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">02</span><h2>缓冲对象</h2></div>
+      <article class="details">
+        <p>配置 VAO、VBO 和可选的 EBO，将顶点数据上传到 GPU。设置顶点属性指针后，解绑 VAO 以便在渲染时只需绑定它即可。</p>
+        <pre><code>float vertices[] = {
+  0.0f,  0.5f, 0.0f,
+  0.5f, -0.5f, 0.0f,
+ -0.5f, -0.5f, 0.0f
+};
+
+GLuint VBO, VAO;
+glGenVertexArrays(1, &VAO);
+glGenBuffers(1, &VBO);
+glBindVertexArray(VAO);
+glBindBuffer(GL_ARRAY_BUFFER, VBO);
+glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+glEnableVertexAttribArray(0);
+</code></pre>
+      </article>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">03</span><h2>着色器</h2></div>
+      <article class="details">
+        <p>编写顶点和片元着色器，并在程序对象中链接。渲染循环中绑定着色器并绘制三角形。</p>
+        <pre><code>GLuint shaderProgram = createShaderProgram(vertexSource, fragmentSource);
+glUseProgram(shaderProgram);
+glBindVertexArray(VAO);
+glDrawArrays(GL_TRIANGLES, 0, 3);
+</code></pre>
+      </article>
+    </section>
+  </main>
+  <footer class="container">
+    <span>© 2026 技术博客 · OpenGL 渲染</span>
+    <div class="footer-links"><a href="../">返回 OpenGL 模块</a><a href="../../">返回主页</a></div>
+  </footer>
+  <button class="back-to-top" aria-label="返回顶部">&#8593;</button>
+  <script src="../js/main.js" defer></script>
+</body>
+</html>

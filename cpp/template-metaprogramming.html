@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>模板元编程基础 · 技术博客</title>
+  <meta name="description" content="通过类型萃取、条件编译和 constexpr，在编译期构建更灵活可复用的泛型组件。" />
+  <meta property="og:title" content="模板元编程基础 · 技术博客" />
+  <meta property="og:description" content="通过类型萃取、条件编译和 constexpr，在编译期构建更灵活可复用的泛型组件。" />
+  <meta property="og:type" content="article" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳转到主要内容</a>
+  <nav class="site-nav">
+    <div class="nav-brand"><a href="../">技术博客</a></div>
+    <button class="nav-toggle" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu">
+      <li><a href="../cpp/">C++</a></li>
+      <li><a href="../qt/">Qt</a></li>
+      <li><a href="../opencv/">OpenCV</a></li>
+      <li><a href="../opengl/">OpenGL</a></li>
+      <li><a href="../projects/">项目</a></li>
+    </ul>
+  </nav>
+  <main class="container" id="main">
+    <section class="hero">
+      <div class="eyebrow">文章</div>
+      <h1>模板元编程基础</h1>
+      <p class="lead">通过类型萃取、条件编译和 constexpr，在编译期构建更灵活可复用的泛型组件。</p>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">01</span><h2>type traits</h2></div>
+      <p>使用标准库 traits 可以在编译期检测类型特征并进行分支选择。</p>
+      <pre><code>template<typename T>
+void process(T&& value) {
+  if constexpr (std::is_integral_v<std::decay_t<T>>) {
+    // 整数专用逻辑
+  } else {
+    // 其他类型逻辑
+  }
+}
+</code></pre>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">02</span><h2>constexpr</h2></div>
+      <p>constexpr 让函数和变量在编译期求值，从而产生零开销抽象。</p>
+      <pre><code>constexpr int factorial(int n) {
+  return n <= 1 ? 1 : n * factorial(n - 1);
+}
+static_assert(factorial(5) == 120);
+</code></pre>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">03</span><h2>概念与约束</h2></div>
+      <p>Concepts 提供语义化的模板约束，提升报错可读性。</p>
+      <pre><code>template<typename T>
+concept Arithmetic = std::is_arithmetic_v<T>;
+
+template<Arithmetic T>
+T add(T a, T b) {
+  return a + b;
+}
+</code></pre>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">04</span><h2>实战应用</h2></div>
+      <p>用模板元编程构建 Traits、Policy、可配置容器和编译期静态映射，提升库的泛化能力。</p>
+    </section>
+  </main>
+  <footer class="container">
+    <span>© 2026 技术博客 · 模板元编程</span>
+    <div class="footer-links"><a href="./">返回 C++ 模块</a><a href="../">返回主页</a></div>
+  </footer>
+  <button class="back-to-top" aria-label="返回顶部">&#8593;</button>
+  <script src="../js/main.js" defer></script>
+</body>
+</html>

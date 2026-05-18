@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C++20 协程入门与实践 · 技术博客</title>
+  <meta name="description" content="从协程模型、常见关键字，到简单调度器的实现，帮助你把异步代码写成更直观的同步风格。" />
+  <meta property="og:title" content="C++20 协程入门与实践 · 技术博客" />
+  <meta property="og:description" content="从协程模型、常见关键字，到简单调度器的实现，帮助你把异步代码写成更直观的同步风格。" />
+  <meta property="og:type" content="article" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳转到主要内容</a>
+  <nav class="site-nav">
+    <div class="nav-brand"><a href="../">技术博客</a></div>
+    <button class="nav-toggle" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu">
+      <li><a href="../cpp/">C++</a></li>
+      <li><a href="../qt/">Qt</a></li>
+      <li><a href="../opencv/">OpenCV</a></li>
+      <li><a href="../opengl/">OpenGL</a></li>
+      <li><a href="../projects/">项目</a></li>
+    </ul>
+  </nav>
+  <main class="container" id="main">
+    <section class="hero">
+      <div class="eyebrow">文章</div>
+      <h1>C++20 协程入门与实践</h1>
+      <p class="lead">从协程模型、常见关键字，到简单调度器的实现，帮助你把异步代码写成更直观的同步风格。</p>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">01</span><h2>协程基础</h2></div>
+      <p>协程是可暂停和恢复的函数。<code>co_await</code>、<code>co_yield</code> 和 <code>co_return</code> 定义了控制流的切换点。</p>
+      <p>C++20 协程本身是语言特性，具体行为由 promise 类型与 awaiter 决定。</p>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">02</span><h2>关键语法</h2></div>
+      <div class="highlight-list">
+        <div class="highlight-item"><strong>co_await</strong><span>等待异步结果，并在需要时将控制权交给调用者。</span></div>
+        <div class="highlight-item"><strong>co_yield</strong><span>产生中间结果，并保留当前状态。</span></div>
+        <div class="highlight-item"><strong>co_return</strong><span>结束协程并返回最终值。</span></div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">03</span><h2>示例代码</h2></div>
+      <pre><code>struct Task {
+  struct promise_type {
+    Task get_return_object() noexcept { return {}; }
+    std::suspend_never initial_suspend() noexcept { return {}; }
+    std::suspend_never final_suspend() noexcept { return {}; }
+    void return_void() noexcept {}
+    void unhandled_exception() { std::terminate(); }
+  };
+};
+
+Task example() {
+  std::cout << "开始协程\n";
+  co_await std::suspend_always{};
+  std::cout << "协程恢复\n";
+}
+</code></pre>
+      <p>以上示例演示协程分成两个阶段，先进入挂起状态，然后由外部恢复。</p>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">04</span><h2>实践建议</h2></div>
+      <p>在网络 IO、文件读取、事件驱动或并发任务中使用协程，可以减少回调嵌套，提升可读性。</p>
+      <p>对于工业级项目，建议结合已有框架（如 cppcoro、asio 或 libuv）来管理协程生命周期。</p>
+    </section>
+  </main>
+  <footer class="container">
+    <span>© 2026 技术博客 · C++20 协程</span>
+    <div class="footer-links"><a href="./">返回 C++ 模块</a><a href="../">返回主页</a></div>
+  </footer>
+  <button class="back-to-top" aria-label="返回顶部">&#8593;</button>
+  <script src="../js/main.js" defer></script>
+</body>
+</html>

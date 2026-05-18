@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>纹理与光照示例 · 技术博客</title>
+  <meta name="description" content="示例展示纹理映射、法线计算和基础光照模型的实现方法。" />
+  <meta property="og:title" content="纹理与光照示例 · 技术博客" />
+  <meta property="og:description" content="示例展示纹理映射、法线计算和基础光照模型的实现方法。" />
+  <meta property="og:type" content="article" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳转到主要内容</a>
+  <nav class="site-nav">
+    <div class="nav-brand"><a href="../">技术博客</a></div>
+    <button class="nav-toggle" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu">
+      <li><a href="../cpp/">C++</a></li>
+      <li><a href="../qt/">Qt</a></li>
+      <li><a href="../opencv/">OpenCV</a></li>
+      <li><a href="../opengl/">OpenGL</a></li>
+      <li><a href="../projects/">项目</a></li>
+    </ul>
+  </nav>
+  <main class="container" id="main">
+    <section class="hero">
+      <div class="eyebrow">文章</div>
+      <h1>纹理与光照示例</h1>
+      <p class="lead">示例展示纹理映射、法线计算和基础光照模型的实现方法。</p>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">01</span><h2>纹理映射</h2></div>
+      <article class="details">
+        <p>上传图像到 GPU，并在片元着色器中根据 UV 坐标采样。绑定纹理单元并通知 shader 采样器对应的单元号。</p>
+        <pre><code>glActiveTexture(GL_TEXTURE0);
+glBindTexture(GL_TEXTURE_2D, texture);
+glUniform1i(glGetUniformLocation(shaderProgram, "u_texture"), 0);
+</code></pre>
+      </article>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">02</span><h2>光照模型</h2></div>
+      <article class="details">
+        <p>实现 Phong 或 Blinn-Phong 光照，计算漫反射、镜面反射与环境光。将法线、视线和光线传递给片元着色器进行光照计算。</p>
+        <pre><code>vec3 normal = normalize(vNormal);
+vec3 lightDir = normalize(lightPos - vPosition);
+float diff = max(dot(normal, lightDir), 0.0);
+vec3 reflectDir = reflect(-lightDir, normal);
+float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess);
+</code></pre>
+      </article>
+    </section>
+    <section class="section">
+      <div class="section-head"><span class="section-number">03</span><h2>实践建议</h2></div>
+      <article class="details">
+        <p>为性能考虑，将纹理坐标与法线压缩到顶点数据，减少片元计算开销。同时优先使用带 MIPMAP 的纹理和线性过滤。</p>
+      </article>
+    </section>
+  </main>
+  <footer class="container">
+    <span>© 2026 技术博客 · 光照示例</span>
+    <div class="footer-links"><a href="../">返回 OpenGL 模块</a><a href="../../">返回主页</a></div>
+  </footer>
+  <button class="back-to-top" aria-label="返回顶部">&#8593;</button>
+  <script src="../js/main.js" defer></script>
+</body>
+</html>
