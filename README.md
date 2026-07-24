@@ -1,34 +1,39 @@
-﻿# 技术博客站点
+# lxx 的技术笔记
 
-这是一个基于静态页面的技术博客项目，已重构为模块化结构，包含以下主要模块：
+这是一个基于 Hugo 的个人技术博客，使用 Yihui Xie 的 `hugo-paged` 主题。
 
-- `index.html`：主页，作为模块入口。
-- `css/style.css`：全局样式文件。
-- `cpp/`：C++ 模块入口页面。
-- `qt/`：Qt 模块入口页面。
-  - `qt/qml/`：QML 子模块页面。
-  - `qt/qwidget/`：QWidget 子模块页面。
-- `opencv/`：OpenCV 模块入口页面。
-- `opengl/`：OpenGL 模块入口页面。
-- `projects/`：项目展示页面。
+## 当前结构
 
-## 目标
+- `hugo.yaml`：Hugo 站点配置。
+- `content/`：Markdown 内容源。
+- `content/blog/`：技术文章。
+- `content/topics.md`：专题索引。
+- `themes/hugo-paged/`：Hugo 主题。
+- `static/`：静态资源。
+- `cpp/`、`qt/`、`opencv/`、`opengl/`、`projects/`：迁移前的静态 HTML 页面，暂时保留用于对照和回滚。
 
-构建一个面向底层编程与图形视觉的技术博客，便于发布：
+## 写作方向
 
-- C++ 深度学习笔记
-- Qt 框架开发经验
-- OpenCV 视觉算法实践
-- OpenGL 渲染与图形工程
-- 关联项目案例与架构总结
+- C++ 工程基础
+- Qt 桌面开发
+- OpenCV 视觉处理
+- OpenGL 图形渲染
+- 项目复盘与架构总结
 
 ## 使用方式
 
-将仓库部署到 GitHub Pages、Netlify 或其他静态站点托管服务。主页 `index.html` 会自动作为入口。
+安装 Hugo 后，在项目根目录运行：
+
+```powershell
+hugo server
+```
+
+生成静态文件：
+
+```powershell
+hugo
+```
 
 ## 后续
 
-可以继续补充每个模块下的文章、示例代码、项目说明与下载链接。
-
-- `projects/` 模块包含项目架构分析、OpenCV 性能调优和跨模块复用策略文章。
-- 未来可增加更多项目案例、工程目录说明和代码实战示例。
+后续应逐步把旧 HTML 页面迁移为 `content/blog/` 下的 Markdown，并在确认 Hugo 构建和部署流程后删除旧静态页面。

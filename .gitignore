@@ -1,0 +1,10 @@
+public/
+resources/
+.tools/
+.hugo_cache/
+.hugo_build.lock
+.DS_Store
+Thumbs.db
+.env*
+.codex/
+.agents/

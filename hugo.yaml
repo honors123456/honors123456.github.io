@@ -1,0 +1,43 @@
+baseURL: "https://honors123456.github.io/"
+locale: "zh-CN"
+title: "lxx 的技术笔记"
+theme: "hugo-paged"
+ignoreFiles: ["\\.Rmd$", "\\.Rmarkdown$", "_cache$"]
+
+outputs:
+  home: [html, rss, json]
+
+menu:
+  main:
+    - name: Home
+      url: ""
+      weight: 1
+    - name: Topics
+      url: "topics/"
+      weight: 2
+    - name: Blog
+      url: "blog/"
+      weight: 3
+    - name: About
+      url: "about/"
+      weight: 4
+
+params:
+  description: "C++、Qt、OpenCV 与 OpenGL 的个人技术笔记。"
+  logo:
+    en:
+      alt: "lxx"
+      url: ""
+      img:
+  footer: "&copy; lxx {Year}"
+  toc_threshold: 4
+
+security:
+  allowContent: ['.*']
+
+markup:
+  highlight:
+    codeFences: false
+  goldmark:
+    renderer:
+      unsafe: true

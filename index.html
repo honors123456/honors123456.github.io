@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>技术博客 · 模块入口</title>
-  <meta name="description" content="从 C++ 到 Qt、OpenCV 与 OpenGL 的技术博客，涵盖底层编程、图形视觉的学习笔记与工程实践。" />
-  <meta property="og:title" content="技术博客 · 模块入口" />
-  <meta property="og:description" content="从 C++ 到 Qt、OpenCV 与 OpenGL 的技术博客，涵盖底层编程、图形视觉的学习笔记与工程实践。" />
+  <title>lxx 的技术笔记</title>
+  <meta name="description" content="lxx 的个人技术博客，记录 C++、Qt、OpenCV 与 OpenGL。" />
+  <meta property="og:title" content="lxx 的技术笔记" />
+  <meta property="og:description" content="记录 C++、Qt、OpenCV 与 OpenGL 的学习笔记、工程实践和项目复盘。" />
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,7 +16,7 @@
 <body>
   <a class="skip-link" href="#main">跳转到主要内容</a>
   <nav class="site-nav">
-    <div class="nav-brand"><a href=".">技术博客</a></div>
+    <div class="nav-brand"><a href=".">lxx 技术笔记</a></div>
     <button class="nav-toggle" aria-label="菜单" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -27,92 +27,37 @@
       <li><a href="opengl/">OpenGL</a></li>
       <li><a href="projects/">项目</a></li>
     </ul>
-    <button class="theme-toggle" aria-label="切换主题" title="切换亮色/暗色主题">◐</button>
   </nav>
 
-  <header class="hero site-hero">
-    <div class="container hero-grid">
-      <div>
-        <p class="eyebrow">技术博客</p>
-        <h1>从 C++ 到 Qt、OpenCV 与 OpenGL 的学习笔记</h1>
-        <p class="lead">这是一个面向底层编程和图形视觉的知识库，涵盖模块化学习路径、实战案例与工程总结。</p>
-        <div class="hero-actions">
-          <a class="button primary" href="#modules">进入模块</a>
-          <a class="button secondary" href="#updates">近期更新</a>
-        </div>
-      </div>
-      <div class="hero-card">
-        <div class="hero-card-title">当前模块</div>
-        <ul class="hero-card-list">
-          <li><a href="cpp/">C++ 基础与实践</a></li>
-          <li><a href="qt/">Qt 框架（QML / QWidget）</a></li>
-          <li><a href="opencv/">OpenCV 视觉开发</a></li>
-          <li><a href="opengl/">OpenGL 渲染</a></li>
-          <li><a href="projects/">项目案例</a></li>
-        </ul>
-      </div>
-    </div>
+  <header class="container home-intro">
+    <h1>lxx 的技术笔记</h1>
+    <p>C++ · Qt · OpenCV · OpenGL</p>
   </header>
 
   <main class="container" id="main">
-    <section id="modules" class="section">
-      <div class="section-head">
-        <span class="section-number">01</span>
-        <h2>模块入口</h2>
-      </div>
-      <div class="module-grid">
-        <div class="module-card">
-          <h3>C++ 模块</h3>
-          <p>学习现代 C++ 语法、模板编程、性能优化、并发与工程实践。</p>
-          <a href="cpp/">进入 C++</a>
-        </div>
-        <div class="module-card">
-          <h3>Qt 模块</h3>
-          <p>涵盖 QML 与 QWidget 两条路径，构建高质量桌面和嵌入式界面。</p>
-          <a href="qt/">进入 Qt</a>
-        </div>
-        <div class="module-card">
-          <h3>OpenCV</h3>
-          <p>讲解图像处理、特征匹配、目标跟踪以及视觉工程落地方案。</p>
-          <a href="opencv/">进入 OpenCV</a>
-        </div>
-        <div class="module-card">
-          <h3>OpenGL</h3>
-          <p>从渲染管线到着色器与场景构建，掌握 GPU 图形开发基础。</p>
-          <a href="opengl/">进入 OpenGL</a>
-        </div>
-        <div class="module-card">
-          <h3>项目</h3>
-          <p>展示跨模块项目案例，包含架构设计、策略总结与实战经验。</p>
-          <a href="projects/">进入项目</a>
-        </div>
-      </div>
+    <section id="modules" class="section compact-section">
+      <h2>Topics</h2>
+      <ul class="plain-list">
+        <li><a href="cpp/">C++</a>：语言、性能、工程实践</li>
+        <li><a href="qt/">Qt</a>：QML、QWidget、桌面应用</li>
+        <li><a href="opencv/">OpenCV</a>：图像处理、视频、调优</li>
+        <li><a href="opengl/">OpenGL</a>：渲染管线、Shader、GPU</li>
+        <li><a href="projects/">Projects</a>：项目复盘与架构总结</li>
+      </ul>
     </section>
 
-    <section id="updates" class="section">
-      <div class="section-head">
-        <span class="section-number">02</span>
-        <h2>近期更新</h2>
-      </div>
-      <div class="highlight-list">
-        <div class="highlight-item">
-          <strong>Qt QML 与 C++ 混合架构</strong>
-          <span>解析如何将 QML 前端和 C++ 后端组合成可维护的桌面应用。</span>
-        </div>
-        <div class="highlight-item">
-          <strong>OpenCV 视频目标跟踪</strong>
-          <span>实现多个跟踪算法的对比，并优化处理流程与性能。</span>
-        </div>
-        <div class="highlight-item">
-          <strong>现代 C++ 模板设计</strong>
-          <span>总结模板元编程技巧，提升泛型库的可读性与可复用性。</span>
-        </div>
-      </div>
+    <section id="updates" class="section compact-section">
+      <h2>Notes</h2>
+      <ul class="post-list">
+        <li><span>2026-07-24</span><a href="projects/qt-architecture.html">Qt QML 与 C++ 混合架构</a></li>
+        <li><span>2026-07-24</span><a href="projects/opencv-performance.html">OpenCV 视频目标跟踪</a></li>
+        <li><span>2026-07-24</span><a href="cpp/">现代 C++ 模板设计</a></li>
+      </ul>
     </section>
   </main>
 
   <footer class="container site-footer">
-    <span>© 2026 技术博客 · 张明</span>
+    <span>© 2026 lxx 技术笔记</span>
     <div class="footer-links"><a href="projects/">查看项目</a><a href="./">返回主页</a></div>
   </footer>
   <button class="back-to-top" aria-label="返回顶部">&#8593;</button>
