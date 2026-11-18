@@ -1,34 +1,42 @@
-﻿# 技术博客站点
+# 技术博客
 
-这是一个基于静态页面的技术博客项目，已重构为模块化结构，包含以下主要模块：
+使用 Hugo 0.170.1 和 PaperMod v8.0。文章保存在 `content/` 中，以 Markdown 编写。
 
-- `index.html`：主页，作为模块入口。
-- `css/style.css`：全局样式文件。
-- `cpp/`：C++ 模块入口页面。
-- `qt/`：Qt 模块入口页面。
-  - `qt/qml/`：QML 子模块页面。
-  - `qt/qwidget/`：QWidget 子模块页面。
-- `opencv/`：OpenCV 模块入口页面。
-- `opengl/`：OpenGL 模块入口页面。
-- `projects/`：项目展示页面。
+## 本地预览
 
-## 目标
+双击 `preview.bat`，服务器启动后会打开默认浏览器。按 Ctrl+C 停止预览。脚本优先使用 `.tools/hugo/hugo.exe`，也支持 PATH 中的 Hugo。
 
-构建一个面向底层编程与图形视觉的技术博客，便于发布：
+## 创建文章
 
-- C++ 深度学习笔记
-- Qt 框架开发经验
-- OpenCV 视觉算法实践
-- OpenGL 渲染与图形工程
-- 关联项目案例与架构总结
+在项目根目录执行以下命令，将 `my-article` 替换为文章文件名。命令使用 `archetypes/default.md` 创建文章。
 
-## 使用方式
+```powershell
+.\.tools\hugo\hugo.exe new content/cpp/my-article.md
+```
 
-将仓库部署到 GitHub Pages、Netlify 或其他静态站点托管服务。主页 `index.html` 会自动作为入口。
+可将 `cpp` 换成 `qt`、`qt/qml`、`qt/qwidget`、`opencv` 或 `opengl`。编辑生成的文件，填写标题、摘要和正文。创建时自动填写日期，并设置 `draft: true`。
 
-## 后续
+预览草稿时运行 `.\preview.bat -D`。准备发布时将 `draft: true` 改成 `draft: false`。文章归属由所在目录决定。
 
-可以继续补充每个模块下的文章、示例代码、项目说明与下载链接。
+## 项目集
 
-- `projects/` 模块包含项目架构分析、OpenCV 性能调优和跨模块复用策略文章。
-- 未来可增加更多项目案例、工程目录说明和代码实战示例。
+每个项目使用 `content/projects/<项目名>/` 目录。先创建 `_index.md` 作为项目入口，例如：
+
+```markdown
+---
+title: "项目名称"
+description: "项目简介"
+---
+```
+
+然后在该目录创建多篇文章。
+
+```powershell
+.\.tools\hugo\hugo.exe new content/projects/my-project/first-article.md
+```
+
+项目集列出项目，项目页面列出该项目的文章。文章也会显示在首页。
+
+## 生成与发布
+
+运行 `.\.tools\hugo\hugo.exe` 生成 `public/`。当前 GitHub Pages 发布方式尚未切换到 Hugo 构建产物。将 Markdown 改为已发布状态后，仍需完成站点部署才能在线访问。

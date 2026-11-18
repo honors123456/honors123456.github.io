@@ -1,0 +1,58 @@
+baseURL = 'https://honors123456.github.io/'
+title = '技术博客'
+defaultContentLanguage = 'zh'
+theme = 'PaperMod'
+hasCJKLanguage = true
+enableRobotsTXT = true
+
+[languages.zh]
+locale = 'zh-CN'
+
+[pagination]
+pagerSize = 20
+
+[outputs]
+home = ['HTML', 'RSS', 'JSON']
+
+[params]
+description = 'C++、Qt、OpenCV 与 OpenGL 的开发笔记和项目集。'
+mainSections = ['cpp', 'qt', 'opencv', 'opengl', 'projects']
+defaultTheme = 'auto'
+disableSpecial1stPost = true
+showToc = true
+hideMeta = false
+ShowBreadCrumbs = true
+ShowCodeCopyButtons = true
+
+[params.assets]
+favicon = 'favicon.svg'
+
+[[menus.main]]
+name = 'C++'
+pageRef = '/cpp'
+weight = 10
+
+[[menus.main]]
+name = 'Qt'
+pageRef = '/qt'
+weight = 20
+
+[[menus.main]]
+name = 'OpenCV'
+pageRef = '/opencv'
+weight = 30
+
+[[menus.main]]
+name = 'OpenGL'
+pageRef = '/opengl'
+weight = 40
+
+[[menus.main]]
+name = '项目集'
+pageRef = '/projects'
+weight = 50
+
+[[menus.main]]
+name = '搜索'
+pageRef = '/search'
+weight = 60
