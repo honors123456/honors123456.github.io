@@ -37,6 +37,16 @@ description: "项目简介"
 
 项目集列出项目，项目页面列出该项目的文章。文章也会显示在首页。
 
-## 生成与发布
+## 发布
 
-运行 `.\.tools\hugo\hugo.exe` 生成 `public/`。当前 GitHub Pages 发布方式尚未切换到 Hugo 构建产物。将 Markdown 改为已发布状态后，仍需完成站点部署才能在线访问。
+`.github/workflows/hugo.yml` 在推送到 `main` 后构建并部署到 GitHub Pages，所以发布只需要提交并推送。
+
+| 入口 | 行为 |
+|---|---|
+| `publish.bat` | `git add -A`，提交信息为 `发布文章 <时间戳>`，然后 `git push` |
+| `quick-publish.bat` | 提交信息固定为 `更新内容`，不暂停窗口 |
+| `auto-publish.bat` | 每 30 秒检查一次改动并自动推送，按 Ctrl+C 停止 |
+
+三个入口都是纯 ASCII 的批处理包装，真正的逻辑在 `scripts/publish.ps1`（UTF-8 with BOM）。改动这些脚本时保持 `.bat` 为 ASCII + CRLF，中文提示写进 PowerShell：批处理如果是 LF 行尾或含 UTF-8 中文，cmd 会按系统代码页解析，报出"不是内部或外部命令"。
+
+只想本地生成静态文件，运行 `.\.tools\hugo\hugo.exe` 即可。
