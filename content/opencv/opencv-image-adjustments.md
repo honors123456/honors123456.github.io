@@ -291,62 +291,7 @@ cv::Mat sharpen(const cv::Mat& src, double amount = 1.0,
 
 `addWeighted` 会饱和转换到输入类型。若需要控制只锐化亮度，可转到 Lab 或 YCrCb，仅处理亮度通道，再合并色度通道，避免彩色边缘产生明显色晕。
 
-## 10. 常见滤镜：模糊、中值与双边
-
-“滤镜”是一个很宽泛的词。以下三种滤波器都读取邻域，但保留的信息不同：
-
-| 滤镜 | 主要效果 | 适合场景 | 代价或局限 |
-|---|---|---|---|
-| 高斯模糊 | 加权平均，抑制高频细节 | 柔化、降噪、构造锐化用的低频图 | 边缘也会变软 |
-| 中值滤波 | 邻域排序后取中值 | 去除孤立的黑白椒盐点 | 大核会抹掉细小结构 |
-| 双边滤波 | 同时考虑空间距离和颜色差异 | 尽量保边的平滑 | 通常比高斯模糊更慢，参数需调节 |
-
-```cpp
-cv::Mat gaussianFilter(const cv::Mat& src, int kernelSize, double sigma)
-{
-    CV_Assert(kernelSize > 0 && kernelSize % 2 == 1);
-    cv::Mat dst;
-    cv::GaussianBlur(src, dst, cv::Size(kernelSize, kernelSize), sigma);
-    return dst;
-}
-
-cv::Mat medianFilter(const cv::Mat& src, int kernelSize)
-{
-    CV_Assert(kernelSize > 0 && kernelSize % 2 == 1);
-    cv::Mat dst;
-    cv::medianBlur(src, dst, kernelSize);
-    return dst;
-}
-
-cv::Mat bilateralFilterImage(const cv::Mat& src, int diameter,
-                             double sigmaColor, double sigmaSpace)
-{
-    cv::Mat dst;
-    cv::bilateralFilter(src, dst, diameter,
-                        sigmaColor, sigmaSpace);
-    return dst;
-}
-```
-
-高斯核大小必须是正奇数；中值滤波的核大小也必须是正奇数，且 OpenCV 对 8 位图像的中值核有实现限制。双边滤波的 `sigmaColor` 控制颜色相近程度，`sigmaSpace` 控制空间邻域范围；增大参数会更强地平滑，也会增加计算量。
-
-还可以使用卷积核实现自定义线性滤镜。例如 3×3 均值核把邻域平均，拉普拉斯核突出二阶变化。卷积核元素之和及锚点会影响亮度和边缘行为，使用前应明确其设计目的。
-
-```cpp
-cv::Mat customSharpenKernel(const cv::Mat& src)
-{
-    const cv::Mat kernel = (cv::Mat_<float>(3, 3) <<
-         0, -1,  0,
-        -1,  5, -1,
-         0, -1,  0);
-
-    cv::Mat dst;
-    cv::filter2D(src, dst, -1, kernel);
-    return dst;
-}
-```
-
-## 11. 组合处理与实践建议
+## 10. 组合处理与实践建议
 
 下面展示如何把函数串起来。顺序会影响结果：例如先大幅拉伸色阶再锐化，容易把噪声放大；先做白平衡再调饱和度通常更容易控制颜色。
 
@@ -370,4 +315,4 @@ if (!cv::imwrite("output.jpg", result)) {
 4. **区分预览与测量**：伪彩适合可视化数值，不应把伪彩结果误当成原始颜色数据。
 5. **验证边界输入**：检查空图、错误类型、非法 Gamma、反向色阶端点和核尺寸。本文函数用 `CV_Assert` 表达基本前置条件。
 
-这些操作提供了图像调节的基础积木。了解公式和数据范围后，可以把它们连接到 Qt 滑块、批量处理工具或实时视频流水线中，并按目标图像和色彩空间选择合适算法。
+滤波器的详细原理、核函数、边界处理与 OpenCV 实现见[《图像滤波详解：从卷积核到保边降噪》]({{< relref "opencv-filtering.md" >}})。这些操作提供了图像调节的基础积木。了解公式和数据范围后，可以把它们连接到 Qt 滑块、批量处理工具或实时视频流水线中，并按目标图像和色彩空间选择合适算法。
