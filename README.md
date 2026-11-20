@@ -4,7 +4,7 @@
 
 ## 本地预览
 
-双击 `preview.bat`，服务器启动后会打开默认浏览器。按 Ctrl+C 停止预览。脚本优先使用 `.tools/hugo/hugo.exe`，也支持 PATH 中的 Hugo。
+双击 `preview.bat`，服务器启动后会打开默认浏览器。预览包含草稿文章，按 Ctrl+C 停止。脚本优先使用 `.tools/hugo/hugo.exe`，也支持 PATH 中的 Hugo。
 
 ## 创建文章
 
@@ -16,7 +16,7 @@
 
 可将 `cpp` 换成 `qt`、`qt/qml`、`qt/qwidget`、`opencv` 或 `opengl`。编辑生成的文件，填写标题、摘要和正文。创建时自动填写日期，并设置 `draft: true`。
 
-预览草稿时运行 `.\preview.bat -D`。准备发布时将 `draft: true` 改成 `draft: false`。文章归属由所在目录决定。
+准备发布时将文章的 `draft: true` 改成 `draft: false`。文章归属由所在目录决定。
 
 ## 项目集
 
@@ -43,10 +43,8 @@ description: "项目简介"
 
 | 入口 | 行为 |
 |---|---|
-| `publish.bat` | `git add -A`，提交信息为 `发布文章 <时间戳>`，然后 `git push` |
-| `quick-publish.bat` | 提交信息固定为 `更新内容`，不暂停窗口 |
-| `auto-publish.bat` | 每 30 秒检查一次改动并自动推送，按 Ctrl+C 停止 |
+| `publish.bat` | 将所有工作区改动加入提交，使用 `发布文章 <时间戳>` 作为提交信息，然后推送当前分支 |
 
-三个入口都是纯 ASCII 的批处理包装，真正的逻辑在 `scripts/publish.ps1`（UTF-8 with BOM）。改动这些脚本时保持 `.bat` 为 ASCII + CRLF，中文提示写进 PowerShell：批处理如果是 LF 行尾或含 UTF-8 中文，cmd 会按系统代码页解析，报出"不是内部或外部命令"。
+`publish.bat` 调用 `scripts/publish.ps1` 执行 Git 操作。发布前先确认文章设置为 `draft: false`；发布脚本不会自动更改文章内容。批处理入口保持 ASCII + CRLF，PowerShell 脚本使用 UTF-8 with BOM，避免 Windows PowerShell 5.1 的编码问题。
 
 只想本地生成静态文件，运行 `.\.tools\hugo\hugo.exe` 即可。
