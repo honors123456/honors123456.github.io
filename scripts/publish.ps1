@@ -1,55 +1,59 @@
 #Requires -Version 5.1
-<#
-  由仓库根目录的 publish.bat 调用。
-  本文件保存为 UTF-8 with BOM，以兼容 Windows PowerShell 5.1 的中文提示。
-#>
 [CmdletBinding()]
 param()
 
 $ErrorActionPreference = 'Stop'
 $repoRoot = Split-Path -Parent $PSScriptRoot
+$exitCode = 0
 
 function Assert-GitCommand {
     param([string]$Action)
     if ($LASTEXITCODE -ne 0) {
-        throw "$Action 失败。"
+        throw "Git command failed: $Action"
     }
 }
 
 Push-Location $repoRoot
 try {
     git rev-parse --is-inside-work-tree *> $null
-    Assert-GitCommand '当前目录不是 Git 仓库'
+    Assert-GitCommand 'repository check'
 
-    git rev-parse --abbrev-ref --symbolic-full-name '@{u}' *> $null
-    if ($LASTEXITCODE -ne 0) {
-        throw '当前分支没有上游分支，请先执行 git push -u origin <分支名>。'
+    $branch = (git branch --show-current).Trim()
+    Assert-GitCommand 'current branch check'
+    if (-not $branch) {
+        throw 'Cannot publish from a detached HEAD.'
     }
 
-    Write-Host '正在发布文章到 GitHub...'
+    Write-Host 'Publishing to GitHub...'
     git add -A
     Assert-GitCommand 'git add'
 
     $staged = @(git diff --cached --name-only)
-    Assert-GitCommand '检查暂存改动'
+    Assert-GitCommand 'staged change check'
     if ($staged.Count -eq 0) {
-        Write-Host '没有需要提交的更改。' -ForegroundColor Yellow
-        exit 0
+        Write-Host 'No changes to publish.' -ForegroundColor Yellow
+    } else {
+        $message = 'Publish ' + (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
+        git commit -m $message
+        Assert-GitCommand 'git commit'
+
+        git rev-parse --abbrev-ref --symbolic-full-name '@{u}' *> $null
+        if ($LASTEXITCODE -eq 0) {
+            git push
+        } else {
+            git push --set-upstream origin $branch
+        }
+        Assert-GitCommand 'git push'
+
+        Write-Host ('Pushed: ' + $message) -ForegroundColor Green
+        Write-Host 'GitHub Actions will build and deploy the site.'
     }
-
-    $message = '发布文章 ' + (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
-    git commit -m $message
-    Assert-GitCommand 'git commit'
-
-    git push
-    Assert-GitCommand 'git push'
-
-    Write-Host ('已推送：' + $message) -ForegroundColor Green
-    Write-Host 'GitHub Actions 将自动构建并部署网站。'
 } catch {
     Write-Host ''
-    Write-Host ('发布失败：' + $_.Exception.Message) -ForegroundColor Red
-    exit 1
+    Write-Host ('Publish failed: ' + $_.Exception.Message) -ForegroundColor Red
+    $exitCode = 1
 } finally {
     Pop-Location
 }
+
+exit $exitCode

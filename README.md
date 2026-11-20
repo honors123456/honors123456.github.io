@@ -4,7 +4,7 @@
 
 ## 本地预览
 
-双击 `preview.bat`，服务器启动后会打开默认浏览器。预览包含草稿文章，按 Ctrl+C 停止。脚本优先使用 `.tools/hugo/hugo.exe`，也支持 PATH 中的 Hugo。
+双击 `preview.bat`，服务器启动后会打开默认浏览器，按 Ctrl+C 停止。脚本优先使用 `.tools/hugo/hugo.exe`，也支持 PATH 中的 Hugo。
 
 ## 创建文章
 
@@ -14,9 +14,7 @@
 .\.tools\hugo\hugo.exe new content/cpp/my-article.md
 ```
 
-可将 `cpp` 换成 `qt`、`qt/qml`、`qt/qwidget`、`opencv` 或 `opengl`。编辑生成的文件，填写标题、摘要和正文。创建时自动填写日期，并设置 `draft: true`。
-
-准备发布时将文章的 `draft: true` 改成 `draft: false`。文章归属由所在目录决定。
+可将 `cpp` 换成 `qt`、`qt/qml`、`qt/qwidget`、`opencv` 或 `opengl`。编辑生成的文件，填写标题、摘要和正文。文章创建时自动填写日期，并默认为正式发布状态。文章归属由所在目录决定。
 
 ## 项目集
 
@@ -45,6 +43,6 @@ description: "项目简介"
 |---|---|
 | `publish.bat` | 将所有工作区改动加入提交，使用 `发布文章 <时间戳>` 作为提交信息，然后推送当前分支 |
 
-`publish.bat` 调用 `scripts/publish.ps1` 执行 Git 操作。发布前先确认文章设置为 `draft: false`；发布脚本不会自动更改文章内容。批处理入口保持 ASCII + CRLF，PowerShell 脚本使用 UTF-8 with BOM，避免 Windows PowerShell 5.1 的编码问题。
+双击 `publish.bat` 会将所有工作区改动加入提交、提交并推送当前分支；若分支尚无上游，会自动推送到 `origin` 并设置上游。推送成功后，GitHub Actions 自动构建并部署网站。文章不经过草稿状态，创建后保存即可在本地预览，运行发布入口即可上线。`publish.bat` 调用 `scripts/publish.ps1` 执行 Git 操作。
 
 只想本地生成静态文件，运行 `.\.tools\hugo\hugo.exe` 即可。
